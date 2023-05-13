@@ -1,75 +1,76 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Ball: MonoBehaviour {
-    public float speed = 10f; // Speed of the ball movement
-    public float maxSpeed = 20f; // Maximum speed of the ball
-    public float randomAngle = 15f; // Random angle range for initial ball direction
-    public float maxAngle = 10f;
-    public int player1Score = 0;
-    public int player2Score= 0;
+    public float speed = 10f;
+    private Rigidbody2D rb;
+    private Vector2 direction;
+    public  int player1Score = 0;
+    public  int player2Score = 0;
     public TextMeshProUGUI scoreText;
+    public bool readyToStart = true;
+    public EnemyPaddleController enemyPaddleController;
+    private GameController gameController;
+    public Transform Paddle1, Paddle2;
 
-    private Rigidbody2D rb2d; // Reference to the Rigidbody2D component
-
-    // Start is called before the first frame update
     void Start() {
-        rb2d = GetComponent<Rigidbody2D>();
-
-        // Generate random initial direction for the ball
-        float angle = Random.Range(-randomAngle,randomAngle);
-        Vector2 direction = new Vector2(Mathf.Cos(angle),Mathf.Sin(angle));
-        rb2d.velocity = direction * speed;
+        // Set the initial direction of the ball
+        direction = Vector2.right.normalized;
+        gameController = FindObjectOfType(typeof(GameController)) as GameController;
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero; 
         scoreText.text = $"{player1Score} - {player2Score}";
     }
 
-    // Update is called once per frame
-    void Update() {
-        // Limit the maximum speed of the ball
-        if(rb2d.velocity.magnitude > maxSpeed) {
-            rb2d.velocity = rb2d.velocity.normalized * maxSpeed;
+    void FixedUpdate() {
+        // Move the ball in its current direction at a constant speed if the game is not paused
+        if(!readyToStart) {
+            rb.velocity = direction * speed;
         }
     }
 
-    // OnCollisionEnter2D is called when the ball collides with another object
-    void OnCollisionEnter2D(Collision2D collision) {
-        // Reflect the ball's velocity off the collision normal
-        Vector2 normal = collision.contacts[0].normal;
-
-        rb2d.velocity = Vector2.Reflect(rb2d.velocity,normal).normalized * speed;
+    void Update() {
+        if(gameController.gameState != GameState.Playing) {
+            return;
+        }
+        // Check if the player has pressed the space bar to start the game
+        if(Input.GetKeyDown(KeyCode.Space) && readyToStart) {
+            // Enable the ball's movement and mark it as not ready to start again
+            enemyPaddleController.gameStarted = true;
+            readyToStart = false;
+        }
     }
 
-    // OnTriggerEnter2D is called when the ball enters a trigger collider
-    void OnTriggerEnter2D(Collider2D collider) {
-        // Check if the trigger collider is a wall
-        if(collider.CompareTag("Wall")) {
-            // Check if the wall is a goal wall
-            if(collider.transform.parent != null && collider.transform.parent.name == "GoalWall") {
-                // Increment the score of the player that scored the goal
-                if(collider.transform.position.x > 0) {
-                    player1Score++;
-                } else {
-                    player2Score++;
-                }
+    void OnCollisionEnter2D(Collision2D col) {
+        // If the ball collides with a paddle, change its direction based on where it hit the paddle
+        if(col.gameObject.tag == "Paddle") {
+            float y = (transform.position.y - col.transform.position.y) / col.collider.bounds.size.y;
+            direction = new Vector2(-direction.x,y).normalized;
+        }
 
-                // Update the UI to display the new scores
-                scoreText.text = $"{player1Score} - {player2Score}";
+        // If the ball collides with a wall, change its direction to bounce off the wall normally
+        if(col.gameObject.tag == "Wall") {
+            direction = new Vector2(direction.x,-direction.y);
+        }
 
-                // Reset the ball's position and velocity
-                transform.position = Vector2.zero;
-                rb2d.velocity = new Vector2(Random.Range(-1f,1f),Random.Range(-1f,1f)).normalized * speed;
+        // If the ball collides with a goal wall, update the score and reset the ball
+        if(col.gameObject.tag == "GoalWall") {
+            if(col.gameObject.transform.position.x > 0) {
+                player1Score++;
             } else {
-                // Reflect the ball's velocity off the wall's normal
-                Vector2 normal = collider.transform.right;
-                Vector2 reflected = Vector2.Reflect(rb2d.velocity,normal).normalized;
-
-                // Add a small random perturbation to the reflected velocity
-                float angle = Random.Range(-maxAngle,maxAngle);
-                reflected = Quaternion.Euler(0,0,angle) * reflected;
-
-                // Set the ball's velocity to the perturbed reflected velocity
-                rb2d.velocity = reflected * speed;
+                player2Score++;
             }
+
+            scoreText.text = $"{player1Score} - {player2Score}";
+
+            // Reset the ball's position and velocity
+            transform.position = Vector2.zero;
+            rb.velocity = Vector2.zero;
+            readyToStart = true;
+            enemyPaddleController.gameStarted=false;
+            Paddle1.position = new Vector3(Paddle1.position.x,0,0);
+            Paddle2.position = new Vector3(Paddle2.position.x,0,0);
         }
     }
 }

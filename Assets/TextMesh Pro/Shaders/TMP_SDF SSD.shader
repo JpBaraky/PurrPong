@@ -257,8 +257,8 @@ SubShader {
 
             float3 light = normalize(float3(sin(_LightAngle), cos(_LightAngle), -1.0));
 
-            float3 col = GetSpecular(n, light);
-            faceColor.rgb += col * faceColor.a;
+            float3 collision = GetSpecular(n, light);
+            faceColor.rgb += collision * faceColor.a;
             faceColor.rgb *= 1 - (dot(n, light) * _Diffuse);
             faceColor.rgb *= lerp(_Ambient, 1, n.z * n.z);
 
