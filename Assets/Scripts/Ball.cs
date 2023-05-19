@@ -13,6 +13,9 @@ public class Ball: MonoBehaviour {
     public EnemyPaddleController enemyPaddleController;
     private GameController gameController;
     public Transform Paddle1, Paddle2;
+    public CatPaddle lastBouncedPaddle;
+    public CatPaddle otherPaddle;
+
 
     void Start() {
         // Set the initial direction of the ball
@@ -47,6 +50,14 @@ public class Ball: MonoBehaviour {
         if(col.gameObject.tag == "Paddle") {
             float y = (transform.position.y - col.transform.position.y) / col.collider.bounds.size.y;
             direction = new Vector2(-direction.x,y).normalized;
+            otherPaddle = lastBouncedPaddle;
+            lastBouncedPaddle = col.gameObject.GetComponent<CatPaddle>();
+
+        }
+        if(col.gameObject.tag == "Hurdle") {
+            float y = (transform.position.y - col.transform.position.y) / col.collider.bounds.size.y;
+            direction = new Vector2(-direction.x,y).normalized;           
+
         }
 
         // If the ball collides with a wall, change its direction to bounce off the wall normally
@@ -69,6 +80,7 @@ public class Ball: MonoBehaviour {
             rb.velocity = Vector2.zero;
             readyToStart = true;
             enemyPaddleController.gameStarted=false;
+            enemyPaddleController.startBoost = false;
             Paddle1.position = new Vector3(Paddle1.position.x,0,0);
             Paddle2.position = new Vector3(Paddle2.position.x,0,0);
         }

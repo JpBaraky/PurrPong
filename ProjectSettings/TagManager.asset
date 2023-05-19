@@ -45,3 +45,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Paddle
+    uniqueID: 1897586303
+    locked: 0
+  - name: PowerUp
+    uniqueID: 1699557155
+    locked: 0
+  - name: Ball
+    uniqueID: 928526225
+    locked: 0
+  - name: UI
+    uniqueID: 3327918521
+    locked: 0

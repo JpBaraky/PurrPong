@@ -5,18 +5,23 @@ public class CatPaddle: MonoBehaviour {
     public float boundaryY = 3.5f; // Vertical boundary of the paddle movement
     public EnemyPaddleController enemyPaddleController;
     private GameController gameController;
+    public bool isPlayer;
+    private Vector3 startingScale;
+    private float startingSpeed;
 
     private Rigidbody2D rb2d; // Reference to the Rigidbody2D component
 
     // Start is called before the first frame update
     void Start() {
+        startingScale= transform.localScale;
+        startingSpeed = speed;
         rb2d = GetComponent<Rigidbody2D>();
         gameController = FindObjectOfType(typeof(GameController)) as GameController;
     }
 
     // FixedUpdate is called at a fixed interval
     void FixedUpdate() {
-        if(gameController.gameState != GameState.Playing) {
+        if(gameController.gameState != GameState.Playing || !isPlayer) {
             return;
         }
         float moveY = Input.GetAxisRaw("Vertical"); // Get input from vertical axis
@@ -30,6 +35,22 @@ public class CatPaddle: MonoBehaviour {
 
         rb2d.MovePosition(position); // Move the paddle to the new position
     }
-    
+    public void IncreaseSize(float sizeAmount) {
+        transform.localScale = transform.localScale * sizeAmount;
+    }
+    public void ResetSize() {
+        transform.localScale = startingScale;
+ 
+    }
+    public void IncreaseSpeed(float speedAmount) {
+        speed += speedAmount;
+        
+    }
+    public void ResetSpeed() {
+        speed = startingSpeed;
+
+    }
+
+
 }
 

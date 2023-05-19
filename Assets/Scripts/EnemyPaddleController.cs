@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyPaddleController: MonoBehaviour {
@@ -5,15 +6,17 @@ public class EnemyPaddleController: MonoBehaviour {
     public float speed; // how fast the enemy paddle moves
     public Transform ball; // reference to the ball object
     public bool gameStarted = false; // flag to track if the game has started
+    public bool startBoost;
     public Rigidbody2D ballRigidBody;
     private GameController gameController;
 
-   
+
     // parameters for the AI behavior
-    private float minPaddleSpeed = 3.0f;
-    private float maxPaddleSpeed = 3.0f;
-    private float reactionTime = 0.5f;
-    private float errorMargin = 1f;
+    public float minPaddleSpeed = 4.0f;
+    public float maxPaddleSpeed = 4.0f;
+    public float reactionTime = 0.5f;
+    public float errorMargin = 1f;
+    public AiDificults.AI aiDificults;
 
     // variables to track the paddle movement
     private Vector2 targetPosition;
@@ -21,29 +24,34 @@ public class EnemyPaddleController: MonoBehaviour {
     private float lastBallPositionY;
 
     void Start() {
-        currentSpeed = Random.Range(minPaddleSpeed, maxPaddleSpeed);
+        currentSpeed = Random.Range(minPaddleSpeed,maxPaddleSpeed);
         gameController = FindObjectOfType(typeof(GameController)) as GameController;
+        speed = AiDificults.GetSpeed(aiDificults);
+        reactionTime = AiDificults.GetReactionTime(aiDificults);
+        errorMargin = AiDificults.GetErrorMargin(aiDificults);
     }
 
     void FixedUpdate() {
-        if(gameController.gameState != GameState.Playing) {
-            return;
-        }
+    
         if(gameStarted) {
+            if(!startBoost) {
+                StartCoroutine(TempSpeed());
+                startBoost= true;
+            }
             // calculate the target position based on the ball's predicted position
-           
 
-                float predictedPositionY = PredictBallPosition();
-                targetPosition = new Vector2(transform.position.x,predictedPositionY);
-        
-            
+
+            float predictedPositionY = PredictBallPosition();
+            targetPosition = new Vector2(transform.position.x,predictedPositionY);
+
+
 
             // move the paddle towards the target position with smooth damp
             float smoothTime = reactionTime * 0.5f;
 
-            
 
-                float newPosY = Mathf.SmoothDamp(transform.position.y,targetPosition.y,ref currentSpeed,smoothTime,speed);
+
+            float newPosY = Mathf.SmoothDamp(transform.position.y,targetPosition.y,ref currentSpeed,smoothTime,speed);
 
             if(!float.IsNaN(newPosY)) {
                 transform.position = Vector2.Lerp(transform.position,new Vector2(transform.position.x,newPosY),0.7f);
@@ -61,7 +69,7 @@ public class EnemyPaddleController: MonoBehaviour {
         }
     }
 
-   
+
 
     private float PredictBallPosition() {
         // calculate the predicted position of the ball based on its current position and velocity
@@ -79,5 +87,10 @@ public class EnemyPaddleController: MonoBehaviour {
 
         return predictedPositionY;
     }
-   
+    private IEnumerator TempSpeed() {
+        speed = speed * 2;
+
+        yield return new WaitForSeconds(2);
+        speed = speed / 2;
     }
+}
