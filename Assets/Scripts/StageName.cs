@@ -19,11 +19,7 @@ public class StageName : MonoBehaviour
         StartCoroutine(DisplayText());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
     public IEnumerator DisplayText() {
         // Show the text
         stageText.enabled = true;
@@ -43,6 +39,8 @@ public class StageName : MonoBehaviour
 
         // Hide the text
         stageText.enabled = false;
+
+    
     }
 
 }

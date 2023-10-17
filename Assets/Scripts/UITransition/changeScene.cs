@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,16 +43,22 @@ public class changeScene : MonoBehaviour
     public void ButtonChangeScene(string sceneName) {
         targetScene= sceneName;
         if(EventSystem.current.currentSelectedGameObject.name == "New Game") {
-            PlayerPrefs.DeleteAll();
-            Debug.Log("teste");
+            PlayerPrefs.DeleteKey("CurrentStage");
+  
         }
         isChangeScene= true;
-        
+   
     }
     public void LoadLevel() {
         targetScene = PlayerPrefs.GetString("CurrentStage", "Stage 1");
         isChangeScene = true;
 
     }
+    public void DestroyThis(String destroy) {
+        Destroy(GameObject.Find(destroy));
+    }
+ 
+    
+    
     
 }

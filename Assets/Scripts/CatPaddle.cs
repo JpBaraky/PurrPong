@@ -1,11 +1,16 @@
 using UnityEngine;
 
 public class CatPaddle: MonoBehaviour {
+
     public float speed = 10f; // Speed of the paddle movement
     public float boundaryY = 3.5f; // Vertical boundary of the paddle movement
+    public float boundaryX1;// Horizontal boundary of the paddle movement
+    public float boundaryX2;// Horizontal boundary of the paddle movement
     public EnemyPaddleController enemyPaddleController;
+    public CatPaddle otherPaddle;
     private GameController gameController;
     public bool isPlayer;
+    public bool player1;
     private Vector3 startingScale;
     private float startingSpeed;
 
@@ -17,6 +22,9 @@ public class CatPaddle: MonoBehaviour {
         startingSpeed = speed;
         rb2d = GetComponent<Rigidbody2D>();
         gameController = FindObjectOfType(typeof(GameController)) as GameController;
+        if(!player1){
+            isPlayer = !gameController.singlePlayer;
+        }
     }
 
     // FixedUpdate is called at a fixed interval
@@ -24,14 +32,25 @@ public class CatPaddle: MonoBehaviour {
         if(gameController.gameState != GameState.Playing || !isPlayer) {
             return;
         }
-        float moveY = Input.GetAxisRaw("Vertical"); // Get input from vertical axis
-
         Vector2 velocity = rb2d.velocity;
+        if(player1) {
+        float moveY = Input.GetAxisRaw("Vertical"); // Get input from vertical axis
+        float moveX = Input.GetAxisRaw("Horizontal"); // Get input from horizontal axis
         velocity.y = moveY * speed * Time.fixedDeltaTime; // Calculate new velocity
-
+        velocity.x = moveX * speed * Time.fixedDeltaTime;
+        }
+        if(!player1){
+            float moveY = Input.GetAxisRaw("Vertical2"); // Get input from vertical axis
+            float moveX = Input.GetAxisRaw("Horizontal2"); // Get input from horizontal axis
+        velocity.y = moveY * speed * Time.fixedDeltaTime; // Calculate new velocity
+        velocity.x = moveX * speed * Time.fixedDeltaTime;
+        }
+        
+       
         Vector2 position = rb2d.position + velocity; // Calculate new position
 
-        position.y = Mathf.Clamp(position.y,-boundaryY,boundaryY); // Clamp position within the boundary
+        position.y = Mathf.Clamp(position.y,-boundaryY,boundaryY);
+        position.x = Mathf.Clamp(position.x,boundaryX1,boundaryX2);// Clamp position within the boundary
 
         rb2d.MovePosition(position); // Move the paddle to the new position
     }

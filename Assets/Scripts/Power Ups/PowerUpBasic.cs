@@ -15,10 +15,12 @@ public class PowerUpBasic : MonoBehaviour
     [Header("Sound and Text")]
     private TextMeshProUGUI powerUpName;
     public string PowerName;
+    public SpriteRenderer powerUpSprite;
     public AudioSource powerUpSound;
     public float displayDuration;
     public int flashCount;
     public float flashInterval;
+    public bool isInventory;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +29,10 @@ public class PowerUpBasic : MonoBehaviour
             powerUpName = targetObject.GetComponent<TextMeshProUGUI>();
         }
         originalScale = transform.localScale;
+        if(!isInventory) {
         StartCoroutine(SelfDestroy());
+        }
+        powerUpSprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -58,6 +63,10 @@ public class PowerUpBasic : MonoBehaviour
             yield return new WaitForSeconds(flashInterval);
             powerUpName.enabled = false;
             yield return new WaitForSeconds(flashInterval);
+        }
+        if(isInventory)
+        {
+            Destroy(gameObject);
         }
 
         // Wait for the remaining duration

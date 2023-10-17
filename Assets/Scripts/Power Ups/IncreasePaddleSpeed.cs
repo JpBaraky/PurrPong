@@ -21,17 +21,19 @@ public class IncreasePaddleSpeed : MonoBehaviour
    
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.CompareTag("Ball")) {
+        if(collision.CompareTag("Paddle")) {
             // Get the paddle component of the player who last bounced the ball
-            Ball ball = collision.GetComponent<Ball>();
+           // Ball ball = collision.GetComponent<Ball>();
             StartCoroutine(powerUpBasic.DisplayText());
-            if(ball != null) {
+           // if(ball != null) {
                 // Get the paddle component of the player who last bounced the ball
                 if(!isToAffectEnemy) {
 
-                    affectPaddle = ball.lastBouncedPaddle;
+                    //affectPaddle = ball.lastBouncedPaddle;
+                    affectPaddle = collision.GetComponent<CatPaddle>();
                 } else {
-                    affectPaddle = ball.otherPaddle;
+                    //affectPaddle = ball.otherPaddle;
+                    affectPaddle = collision.GetComponent<CatPaddle>().otherPaddle;
                 }
 
                 if(affectPaddle != null) {
@@ -52,7 +54,7 @@ public class IncreasePaddleSpeed : MonoBehaviour
 
                 }
             }
-        }
+       // }
     }
 
     private IEnumerator RevertPaddleSpeed(CatPaddle paddle) {
@@ -65,5 +67,6 @@ public class IncreasePaddleSpeed : MonoBehaviour
             Destroy(gameObject);
         }
     }
+   
     
 }

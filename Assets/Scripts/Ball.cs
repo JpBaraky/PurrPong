@@ -15,6 +15,8 @@ public class Ball: MonoBehaviour {
     public Transform Paddle1, Paddle2;
     public CatPaddle lastBouncedPaddle;
     public CatPaddle otherPaddle;
+    public bool isFakeBall;
+    private float startingSpeed;
 
 
     void Start() {
@@ -24,6 +26,7 @@ public class Ball: MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.zero; 
         scoreText.text = $"{player1Score} - {player2Score}";
+        startingSpeed = speed;
     }
 
     void FixedUpdate() {
@@ -52,37 +55,77 @@ public class Ball: MonoBehaviour {
             direction = new Vector2(-direction.x,y).normalized;
             otherPaddle = lastBouncedPaddle;
             lastBouncedPaddle = col.gameObject.GetComponent<CatPaddle>();
-
+            rb.AddTorque(Random.Range(-10, 10));
         }
         if(col.gameObject.tag == "Hurdle") {
             float y = (transform.position.y - col.transform.position.y) / col.collider.bounds.size.y;
             direction = new Vector2(-direction.x,y).normalized;           
-
+            rb.AddTorque(Random.Range(-10, 10));
         }
 
         // If the ball collides with a wall, change its direction to bounce off the wall normally
         if(col.gameObject.tag == "Wall") {
             direction = new Vector2(direction.x,-direction.y);
+            rb.AddTorque(Random.Range(-10, 10));
         }
 
         // If the ball collides with a goal wall, update the score and reset the ball
         if(col.gameObject.tag == "GoalWall") {
+            if(!isFakeBall){
+
+            
             if(col.gameObject.transform.position.x > 0) {
                 player1Score++;
             } else {
                 player2Score++;
             }
 
-            scoreText.text = $"{player1Score} - {player2Score}";
-
-            // Reset the ball's position and velocity
+            scoreText.text = $"{player1Score} - {player2Score}";  
+            Reset();
+                     
+            
+            } else{
+                Destroy(gameObject);
+            }
+            
+    }
+    void Reset() {
+// Reset the ball's position and velocity
             transform.position = Vector2.zero;
             rb.velocity = Vector2.zero;
             readyToStart = true;
+            rb.rotation = 0; 
+            rb.inertia = 0;
+            rb.centerOfMass = Vector3.zero;
             enemyPaddleController.gameStarted=false;
             enemyPaddleController.startBoost = false;
-            Paddle1.position = new Vector3(Paddle1.position.x,0,0);
-            Paddle2.position = new Vector3(Paddle2.position.x,0,0);
+            Paddle1.position = new Vector3(-6f,0,0);
+            Paddle2.position = new Vector3(6f,0,0);
+           //Stop Ball's rotation
+            rb.angularVelocity = 0;
+            rb.velocity = Vector2.zero;
+             //Destroy all objects with the tag FakeBall
+             GameObject[] fakeBalls = GameObject.FindGameObjectsWithTag("FakeBall");
+             foreach(GameObject fakeBall in fakeBalls){
+                 Destroy(fakeBall);
+             }
+            
         }
+        
+    }
+    public void IncreaseSize(float sizeAmount) {
+        transform.localScale = transform.localScale * sizeAmount;
+    }
+    public void ResetSize() {
+        transform.localScale = Vector3.one;
+ 
+    }
+    public void IncreaseSpeed(float speedAmount) {
+        speed += speedAmount;
+        
+    }
+    public void ResetSpeed() {
+        speed = startingSpeed;
+
     }
 }

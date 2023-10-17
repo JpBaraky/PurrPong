@@ -14,6 +14,8 @@ public class PaddleSizePowerUp: MonoBehaviour {
     private PowerUpBasic powerUpBasic;
     public bool isToAffectEnemy;
     private CatPaddle affectPaddle;
+    private CatPaddle player1Paddle;
+    private CatPaddle player2Paddle;
 
 
     private void Start() {
@@ -23,18 +25,21 @@ public class PaddleSizePowerUp: MonoBehaviour {
 
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.CompareTag("Ball")) {
-            // Get the paddle component of the player who last bounced the ball
-            Ball ball = collision.GetComponent<Ball>();
+        if(collision.CompareTag("Paddle")) {
+      
+            if(!powerUpBasic.isInventory){
+                
             StartCoroutine(powerUpBasic.DisplayText());
-            if(ball != null) {
-                // Get the paddle component of the player who last bounced the ball
+            
+          
              
                 if(!isToAffectEnemy) {
 
-                    affectPaddle = ball.lastBouncedPaddle;
+                    //affectPaddle = ball.lastBouncedPaddle;
+                    affectPaddle = collision.GetComponent<CatPaddle>();
                 } else {
-                    affectPaddle = ball.otherPaddle;
+                    //affectPaddle = ball.otherPaddle;
+                    affectPaddle = collision.GetComponent<CatPaddle>().otherPaddle;
                 }
 
                 // Increase the size of the paddle
@@ -45,12 +50,12 @@ public class PaddleSizePowerUp: MonoBehaviour {
 
                     // Set the power-up as active
                     powerUpActive = true;
-
+            }
                     // Disable the collider so the power-up doesn't trigger again
                     GetComponent<Collider2D>().enabled = false;
                     GetComponent<SpriteRenderer>().enabled = false;
                 
-                }
+            
 
                 
             

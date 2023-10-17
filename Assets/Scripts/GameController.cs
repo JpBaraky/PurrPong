@@ -21,13 +21,37 @@ public class GameController: MonoBehaviour {
     private Ball ballScript;
     private int currentLevel = 0;
     public string[] Stages;
+    private SoundSettings soundSettings;
+    public ScanlinesEffect GameCameraScanline;
+    private string currentSceneName;
+    public bool singlePlayer;
     void Start() {
         changeScene = GetComponent<changeScene>();
+        soundSettings = GetComponent<SoundSettings>();
         ballScript = FindObjectOfType(typeof(Ball)) as Ball;
+        
         gameState = GameState.Playing;
+        soundSettings = GetComponent<SoundSettings>();
+        GameCameraScanline = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScanlinesEffect>();
+        currentSceneName = SceneManager.GetActiveScene().name;
     }
 
     void Update() {
+         if (currentSceneName != SceneManager.GetActiveScene().name)
+        {
+            if(SceneManager.GetActiveScene().name == "Stage1"){
+                 Paddle1 = GameObject.Find("Paddle1").transform;
+                 Paddle2 = GameObject.Find("Paddle2").transform;
+            }
+             ballScript = FindObjectOfType(typeof(Ball)) as Ball;
+            GameCameraScanline = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScanlinesEffect>();
+                  currentSceneName = SceneManager.GetActiveScene().name;
+            
+        }
+        if(GameCameraScanline != null && soundSettings != null){
+        GameCameraScanline.enabled = soundSettings.scanLines;
+        }
+        
         if(Input.GetKeyDown(KeyCode.Escape)) {
             if(gameState == GameState.Playing) {
                 PauseGame();
@@ -35,7 +59,9 @@ public class GameController: MonoBehaviour {
                 ResumeGame();
             }
         }
-        EndOfMatch();
+        if(gameState == GameState.Playing) {
+       EndOfMatch();
+        }
     }
 
     void PauseGame() {
@@ -48,7 +74,11 @@ public class GameController: MonoBehaviour {
         Time.timeScale = 1f; // This will resume the normal time scale.
     }
     void EndOfMatch() {
-        if(ballScript.player1Score >= 5) {
+        if(ballScript == null || Paddle1 == null || Paddle2 == null) {
+            return;
+        } 
+        
+            if(ballScript.player1Score >= 5) {
             PlayerWon.gameObject.SetActive(true);
             PlayerWon.text = "Player 1 Won!!!";
             gameState = GameState.EndOfMatch;
@@ -89,5 +119,12 @@ public class GameController: MonoBehaviour {
         gameState = GameState.Playing;
         Debug.Log("OnSceneLoaded: " + scene.name);
         Debug.Log(mode);
+    }
+    public void SinglePlayer(){
+        singlePlayer = true;
+    }
+    public void MultiPlayer(){
+        singlePlayer = false;
+    
     }
 }

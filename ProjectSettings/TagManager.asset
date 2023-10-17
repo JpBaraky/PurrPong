@@ -8,6 +8,12 @@ TagManager:
   - GoalWall
   - Paddle
   - Ball
+  - FakeBall
+  - Dog Spawn
+  - Roomba Spawn
+  - Hurdle
+  - Arm Spawn
+  - Soap Spawn
   layers:
   - Default
   - TransparentFX
@@ -15,9 +21,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - FakeBall
+  - Ball
+  - Hurdle
   - 
   - 
   - 
@@ -42,6 +48,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Floor
+    uniqueID: 2690742695
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -1,28 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class RoombaController: MonoBehaviour {
-    public float upDistance = 2f;
+public class ObjectsController : MonoBehaviour
+{
+     public float upDistance = 2f;
     public float downDistance = 2f;
     public float rotationSpeed = 180f;
     public float moveSpeed = 2f;
     public float pauseTime = 1f;
 
-    private bool movingUp = true;
+    public bool movingUp = true;
+    private int timesMoved;
+    public int timesToMove = 3;
+    public float rotationAngle = 180f;
+    public bool isLeftToRight = true;
 
+    
     private void Start() {
         StartCoroutine(MoveRoutine());
+       
+
     }
+    private void Update(){
+        if(timesMoved >= timesToMove) {
+            Destroy(gameObject);
+        }
+    }
+    
 
     private System.Collections.IEnumerator MoveRoutine() {
         while(true) {
+            if(isLeftToRight){
             if(movingUp) {
-                yield return StartCoroutine(MoveObject(transform.position + Vector3.up * upDistance,moveSpeed));
-                yield return StartCoroutine(RotateObject(180f,rotationSpeed));
+                timesMoved++;
+                yield return StartCoroutine(MoveObject(transform.position + Vector3.right * upDistance,moveSpeed));
+                yield return StartCoroutine(RotateObject(rotationAngle,rotationSpeed));
+                
                 movingUp = false;
             } else {
-                yield return StartCoroutine(MoveObject(transform.position + Vector3.down * downDistance,moveSpeed));
-                yield return StartCoroutine(RotateObject(180f,rotationSpeed));
+                timesMoved++;
+                yield return StartCoroutine(MoveObject(transform.position + Vector3.left  * downDistance,moveSpeed));
+                yield return StartCoroutine(RotateObject(rotationAngle,rotationSpeed));
                 movingUp = true;
+               
+            }
+            } else{
+                if(movingUp) {
+                timesMoved++;
+                yield return StartCoroutine(MoveObject(transform.position + Vector3.up * upDistance,moveSpeed));
+                yield return StartCoroutine(RotateObject(rotationAngle,rotationSpeed));
+                
+                movingUp = false;
+            } else {
+                timesMoved++;
+                yield return StartCoroutine(MoveObject(transform.position + Vector3.down  * downDistance,moveSpeed));
+                yield return StartCoroutine(RotateObject(rotationAngle,rotationSpeed));
+                movingUp = true;
+               
+            }
+
             }
 
             yield return new WaitForSeconds(pauseTime);
@@ -55,7 +92,7 @@ public class RoombaController: MonoBehaviour {
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
+         this.GetComponent<SpriteRenderer>().flipX = !this.GetComponent<SpriteRenderer>().flipX;
         transform.rotation = targetQuaternion;
     }
 }
