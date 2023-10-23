@@ -2342,8 +2342,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   boundaryY: 3
+  boundaryX1: 0
+  boundaryX2: 0
   enemyPaddleController: {fileID: 0}
+  otherPaddle: {fileID: 0}
   isPlayer: 0
+  player1: 0
 --- !u!114 &868433748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3019,6 +3023,8 @@ MonoBehaviour:
   - Stage 3
   - Stage 4
   - Stage 5
+  GameCameraScanline: {fileID: 0}
+  singlePlayer: 0
 --- !u!4 &1272232445
 Transform:
   m_ObjectHideFlags: 0
@@ -6138,7 +6144,8 @@ MonoBehaviour:
   - {fileID: 8213547244845709943, guid: 004696f5eafad114bbfa03c016f0d4d8, type: 3}
   - {fileID: 5031224071604060460, guid: e579abab106cecd4e85a02a16d336914, type: 3}
   - {fileID: 8213547244845709943, guid: 4f6af99795db06f429b294b692882fd2, type: 3}
-  spawnArea: {fileID: 2046458562}
+  spawnAreaPlayer1: {fileID: 0}
+  spawnAreaPlayer2: {fileID: 0}
   minSpawnTime: 10
   maxSpawnTime: 15
 --- !u!61 &2046458562

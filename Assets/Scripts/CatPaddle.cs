@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class CatPaddle: MonoBehaviour {
 
@@ -13,8 +15,12 @@ public class CatPaddle: MonoBehaviour {
     public bool player1;
     private Vector3 startingScale;
     private float startingSpeed;
+    private float moveX, moveY;
 
     private Rigidbody2D rb2d; // Reference to the Rigidbody2D component
+
+    [SerializeField]
+    private InputActionReference Move;
 
     // Start is called before the first frame update
     void Start() {
@@ -26,22 +32,31 @@ public class CatPaddle: MonoBehaviour {
             isPlayer = !gameController.singlePlayer;
         }
     }
-
+public void OnMove(){
+     moveY = Move.action.ReadValue<Vector2>().y;// Get input from vertical axis
+        
+     moveX = Move.action.ReadValue<Vector2>().x; // Get input from horizontal axis
+        
+}
     // FixedUpdate is called at a fixed interval
     void FixedUpdate() {
+        
         if(gameController.gameState != GameState.Playing || !isPlayer) {
             return;
         }
         Vector2 velocity = rb2d.velocity;
+        velocity.y = moveY * speed * Time.fixedDeltaTime; // Calculate new velocity
+        velocity.x = moveX * speed * Time.fixedDeltaTime;
         if(player1) {
-        float moveY = Input.GetAxisRaw("Vertical"); // Get input from vertical axis
-        float moveX = Input.GetAxisRaw("Horizontal"); // Get input from horizontal axis
+       float moveX = Input.GetAxisRaw("Horizontal");// Get input from vertical axis
+       
+       float moveY = Input.GetAxisRaw("Vertical"); // Get input from horizontal axis
         velocity.y = moveY * speed * Time.fixedDeltaTime; // Calculate new velocity
         velocity.x = moveX * speed * Time.fixedDeltaTime;
         }
         if(!player1){
-            float moveY = Input.GetAxisRaw("Vertical2"); // Get input from vertical axis
-            float moveX = Input.GetAxisRaw("Horizontal2"); // Get input from horizontal axis
+            float moveY = Input.GetAxisRaw("Vertical2");  // Get input from vertical axis
+            float moveX = Input.GetAxisRaw("Horizontal2");  // Get input from horizontal axis
         velocity.y = moveY * speed * Time.fixedDeltaTime; // Calculate new velocity
         velocity.x = moveX * speed * Time.fixedDeltaTime;
         }

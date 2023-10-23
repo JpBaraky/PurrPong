@@ -494,7 +494,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -502,6 +502,69 @@ TextureImporter:
       bones: []
       spriteID: 5bdd8212bfbcc80488aafb4e0f01c3a6
       internalID: 2100762674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorTiles-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da1443480e9a5254992068654db234c2
+      internalID: 2127615688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorTiles-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1d7dfed1cf825d47a77a06105483754
+      internalID: 848336448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FloorTiles-Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2790b8f1cf7fa8a4ab170a9092ddc658
+      internalID: -1166508259
       vertices: []
       indices: 
       edges: []
@@ -521,6 +584,7 @@ TextureImporter:
       FloorTiles-Sheet_1: 1211999493
       FloorTiles-Sheet_15: 1379460044
       FloorTiles-Sheet_8: -306737179
+      FloorTiles-Sheet_20: -1166508259
       FloorTiles-Sheet_11: 1600923672
       FloorTiles-Sheet_14: -1537821391
       FloorTiles-Sheet_0: 169741865
@@ -532,6 +596,8 @@ TextureImporter:
       FloorTiles-Sheet_6: 1133191272
       FloorTiles-Sheet_16: -120658424
       FloorTiles-Sheet_4: 1653796460
+      FloorTiles-Sheet_18: 2127615688
+      FloorTiles-Sheet_19: 848336448
       FloorTiles-Sheet_17: 2100762674
       FloorTiles-Sheet_5: 463275946
       FloorTiles-Sheet_3: 1241914564

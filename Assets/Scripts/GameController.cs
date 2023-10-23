@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public enum GameState {
@@ -25,6 +26,10 @@ public class GameController: MonoBehaviour {
     public ScanlinesEffect GameCameraScanline;
     private string currentSceneName;
     public bool singlePlayer;
+    [SerializeField]
+
+    private InputActionReference PauseButton;
+    
     void Start() {
         changeScene = GetComponent<changeScene>();
         soundSettings = GetComponent<SoundSettings>();
@@ -52,7 +57,7 @@ public class GameController: MonoBehaviour {
         GameCameraScanline.enabled = soundSettings.scanLines;
         }
         
-        if(Input.GetKeyDown(KeyCode.Escape)) {
+        if(PauseButton.action.triggered || Input.GetButtonDown("Pause")) {
             if(gameState == GameState.Playing) {
                 PauseGame();
             } else {

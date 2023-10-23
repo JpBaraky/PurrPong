@@ -33,14 +33,16 @@ public class PowerUpInventory : MonoBehaviour
     
         if (isPlayer1){
             if(inventoryPlayer1.Count > 0){
-                inventoryPlayer1[0].SendMessage("UseItem");
+              //  inventoryPlayer1[0].SendMessage("UseItem");
+                inventoryPlayer1[0].SendMessage("UseItem",1);
+
              inventoryPlayer1.RemoveAt(0);
             }
              inventoryPlayer1.Add(collectedPowerUp);
              itemIconPlayer1 = collectedPowerUp.powerUpSprite.sprite;
         }else{
              if(inventoryPlayer2.Count > 0) {
-                inventoryPlayer2[0].SendMessage("UseItem");
+                inventoryPlayer2[0].SendMessage("UseItem",2);
              inventoryPlayer2.RemoveAt(0);
              }
              inventoryPlayer2.Add(collectedPowerUp);
@@ -55,12 +57,17 @@ public class PowerUpInventory : MonoBehaviour
     }
     public void Use(bool isPlayer1){
             if (isPlayer1 && inventoryPlayer1.Count > 0 ){
-            inventoryPlayer1[0].SendMessage("UseItem");
+
+
+                         inventoryPlayer1[0].SendMessage("UseItem", 1);
+
+           
              inventoryPlayer1.RemoveAt(0);
              itemIconPlayer1 = null;
         }else{
             if(!isPlayer1 && inventoryPlayer2.Count > 0  ){
-             inventoryPlayer2[0].SendMessage("UseItem");
+            inventoryPlayer2[0].SendMessage("UseItem", 2);
+ 
              inventoryPlayer2.RemoveAt(0);
              itemIconPlayer2 = null;
             }

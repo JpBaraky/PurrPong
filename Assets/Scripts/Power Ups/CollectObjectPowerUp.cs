@@ -7,9 +7,9 @@ public class CollectObjectPowerUp : MonoBehaviour
     [Header("PoweUp Settings")]
 
  
-    private PowerUpBasic powerUpBasic;
+    public PowerUpBasic powerUpBasic;
     private PowerUpInventory inventory;
-    private ObjectSpawn objectSpawn;
+    public ObjectSpawn objectSpawn;
     
   
 
@@ -18,7 +18,6 @@ public class CollectObjectPowerUp : MonoBehaviour
         powerUpBasic = GetComponent<PowerUpBasic>();
         inventory = FindObjectOfType(typeof(PowerUpInventory)) as PowerUpInventory;
         objectSpawn = FindObjectOfType(typeof(ObjectSpawn)) as ObjectSpawn;
-    
     }
 
 
@@ -29,7 +28,7 @@ public class CollectObjectPowerUp : MonoBehaviour
             if(!powerUpBasic.isInventory){
                 
             
-            UseItem();             
+           // UseItem();             
 
            
 
@@ -51,10 +50,13 @@ public class CollectObjectPowerUp : MonoBehaviour
         }
     }
 
-    public void UseItem(){
+    public void UseItem(int playerID){
         StartCoroutine(powerUpBasic.DisplayText());
-        objectSpawn.SpawnObject();
+ 
+        objectSpawn.SpawnObject(powerUpBasic.IDItem, playerID);
       
     }
+  
+ 
   
 }

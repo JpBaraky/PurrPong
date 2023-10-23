@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Ball: MonoBehaviour {
@@ -17,7 +18,9 @@ public class Ball: MonoBehaviour {
     public CatPaddle otherPaddle;
     public bool isFakeBall;
     private float startingSpeed;
+[SerializeField]
 
+private InputActionReference StartGame;
 
     void Start() {
         // Set the initial direction of the ball
@@ -41,7 +44,8 @@ public class Ball: MonoBehaviour {
             return;
         }
         // Check if the player has pressed the space bar to start the game
-        if(Input.GetKeyDown(KeyCode.Space) && readyToStart) {
+        if(StartGame.action.IsPressed() && !enemyPaddleController.gameStarted
+        && readyToStart) {
             // Enable the ball's movement and mark it as not ready to start again
             enemyPaddleController.gameStarted = true;
             readyToStart = false;

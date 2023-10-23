@@ -21,7 +21,9 @@ public class PowerUpBasic : MonoBehaviour
     public int flashCount;
     public float flashInterval;
     public bool isInventory;
-    // Start is called before the first frame update
+    public int IDItem;
+    public bool isProp;
+        // Start is called before the first frame update
     void Start()
     {
         GameObject targetObject = GameObject.Find("PowerUpText");
@@ -73,7 +75,7 @@ public class PowerUpBasic : MonoBehaviour
         yield return new WaitForSeconds(displayDuration - (flashCount * 2 * flashInterval));
 
         // Hide the text
-        powerUpName .enabled = false;
+        powerUpName.enabled = false;
     }
     
 }

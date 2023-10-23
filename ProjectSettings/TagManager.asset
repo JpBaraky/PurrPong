@@ -12,8 +12,10 @@ TagManager:
   - Dog Spawn
   - Roomba Spawn
   - Hurdle
-  - Arm Spawn
   - Soap Spawn
+  - Dog Spawn 2
+  - Soap Spawn 2
+  - Bone
   layers:
   - Default
   - TransparentFX
@@ -24,7 +26,7 @@ TagManager:
   - FakeBall
   - Ball
   - Hurdle
-  - 
+  - Items
   - 
   - 
   - 
