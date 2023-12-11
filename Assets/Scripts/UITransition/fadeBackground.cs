@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 
@@ -12,6 +13,7 @@ public class fadeBackground: MonoBehaviour {
     public float step;
     private bool transition;
     public float fadeOutTimer = 0.5f;
+
     
       void Start()
     {
@@ -22,6 +24,8 @@ public class fadeBackground: MonoBehaviour {
             fadeOut();
 
         
+    
+
     }
     public void fadeIn() {
         if(!transition) {

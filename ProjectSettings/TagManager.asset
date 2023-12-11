@@ -16,6 +16,10 @@ TagManager:
   - Dog Spawn 2
   - Soap Spawn 2
   - Bone
+  - PowerUps
+  - Pause Menu
+  - Sound Effects
+  - Music
   layers:
   - Default
   - TransparentFX

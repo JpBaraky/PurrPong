@@ -14,10 +14,16 @@ public class Ball: MonoBehaviour {
     public EnemyPaddleController enemyPaddleController;
     private GameController gameController;
     public Transform Paddle1, Paddle2;
+    public Animator CatAnimator;
     public CatPaddle lastBouncedPaddle;
     public CatPaddle otherPaddle;
     public bool isFakeBall;
     private float startingSpeed;
+    private AudioSource ballSounds;
+    [Header("Sound Clips")]
+    public AudioClip hitSoundHurdle;
+    public AudioClip hitSoundPaddle;
+
 [SerializeField]
 
 private InputActionReference StartGame;
@@ -30,6 +36,7 @@ private InputActionReference StartGame;
         rb.velocity = Vector2.zero; 
         scoreText.text = $"{player1Score} - {player2Score}";
         startingSpeed = speed;
+        ballSounds = GetComponent<AudioSource>();
     }
 
     void FixedUpdate() {
@@ -44,7 +51,8 @@ private InputActionReference StartGame;
             return;
         }
         // Check if the player has pressed the space bar to start the game
-        if(StartGame.action.IsPressed() && !enemyPaddleController.gameStarted
+        if(StartGame.action.IsPressed() || Input.GetButtonDown("Fire3")
+         && !enemyPaddleController.gameStarted
         && readyToStart) {
             // Enable the ball's movement and mark it as not ready to start again
             enemyPaddleController.gameStarted = true;
@@ -55,6 +63,9 @@ private InputActionReference StartGame;
     void OnCollisionEnter2D(Collision2D col) {
         // If the ball collides with a paddle, change its direction based on where it hit the paddle
         if(col.gameObject.tag == "Paddle") {
+            CatAnimator = col.gameObject.GetComponent<Animator>();
+            CatAnimator.SetTrigger("Cat Attack");
+            ballSounds.PlayOneShot(hitSoundPaddle);
             float y = (transform.position.y - col.transform.position.y) / col.collider.bounds.size.y;
             direction = new Vector2(-direction.x,y).normalized;
             otherPaddle = lastBouncedPaddle;
@@ -63,13 +74,16 @@ private InputActionReference StartGame;
         }
         if(col.gameObject.tag == "Hurdle") {
             float y = (transform.position.y - col.transform.position.y) / col.collider.bounds.size.y;
-            direction = new Vector2(-direction.x,y).normalized;           
+            float x = (transform.position.x - col.transform.position.x) / col.collider.bounds.size.x;
+            direction = new Vector2(-direction.x,y).normalized;   
+            ballSounds.PlayOneShot(hitSoundHurdle);        
             rb.AddTorque(Random.Range(-10, 10));
         }
 
         // If the ball collides with a wall, change its direction to bounce off the wall normally
         if(col.gameObject.tag == "Wall") {
             direction = new Vector2(direction.x,-direction.y);
+            ballSounds.PlayOneShot(hitSoundHurdle);
             rb.AddTorque(Random.Range(-10, 10));
         }
 
@@ -79,8 +93,10 @@ private InputActionReference StartGame;
 
             
             if(col.gameObject.transform.position.x > 0) {
+                direction = Vector2.left.normalized;
                 player1Score++;
             } else {
+                direction = Vector2.right.normalized;
                 player2Score++;
             }
 
@@ -103,8 +119,8 @@ private InputActionReference StartGame;
             rb.centerOfMass = Vector3.zero;
             enemyPaddleController.gameStarted=false;
             enemyPaddleController.startBoost = false;
-            Paddle1.position = new Vector3(-6f,0,0);
-            Paddle2.position = new Vector3(6f,0,0);
+            Paddle1.position = new Vector3(-5f,0,0);
+            Paddle2.position = new Vector3(5f,0,0);
            //Stop Ball's rotation
             rb.angularVelocity = 0;
             rb.velocity = Vector2.zero;
@@ -112,6 +128,14 @@ private InputActionReference StartGame;
              GameObject[] fakeBalls = GameObject.FindGameObjectsWithTag("FakeBall");
              foreach(GameObject fakeBall in fakeBalls){
                  Destroy(fakeBall);
+             }
+             GameObject[] powerUps = GameObject.FindGameObjectsWithTag("Bone");
+             foreach(GameObject powerUp in powerUps){
+                 Destroy(powerUp);
+             }
+             GameObject[] Hurdles = GameObject.FindGameObjectsWithTag("Hurdle");
+             foreach(GameObject hurdles in Hurdles){
+                 Destroy(hurdles);
              }
             
         }

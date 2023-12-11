@@ -16,7 +16,9 @@ public class PowerUpBasic : MonoBehaviour
     private TextMeshProUGUI powerUpName;
     public string PowerName;
     public SpriteRenderer powerUpSprite;
-    public AudioSource powerUpSound;
+    public AudioClip powerUpSoundClip;
+    public AudioClip voiceClip;
+    private AudioSource powerUpSound;
     public float displayDuration;
     public int flashCount;
     public float flashInterval;
@@ -35,6 +37,7 @@ public class PowerUpBasic : MonoBehaviour
         StartCoroutine(SelfDestroy());
         }
         powerUpSprite = GetComponent<SpriteRenderer>();
+        powerUpSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame

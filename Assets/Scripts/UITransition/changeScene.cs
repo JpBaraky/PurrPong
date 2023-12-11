@@ -49,6 +49,10 @@ public class changeScene : MonoBehaviour
         isChangeScene= true;
    
     }
+    public void ChangeScene(String sceneName) {
+      targetScene= sceneName;
+         isChangeScene= true;
+    }
     public void LoadLevel() {
         targetScene = PlayerPrefs.GetString("CurrentStage", "Stage 1");
         isChangeScene = true;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -16,16 +17,29 @@ public enum GameState {
 
 public class GameController: MonoBehaviour {
     private changeScene changeScene;
-    public GameState gameState;
-    public TextMeshProUGUI PlayerWon;
-    public Transform Paddle1, Paddle2;
-    private Ball ballScript;
-    private int currentLevel = 0;
-    public string[] Stages;
-    private SoundSettings soundSettings;
-    public ScanlinesEffect GameCameraScanline;
     private string currentSceneName;
+    [Header("UI")]
+    public TextMeshProUGUI PlayerWon;
+    public TextMeshProUGUI PerfectGame;
+    public GameObject pauseMenu;
+    [Header("Gameplay")]
+    public GameState gameState;
+    public Transform Paddle1, Paddle2;
+    public string[] Stages;
     public bool singlePlayer;
+    private Ball ballScript;
+    private bool canProgress;
+    private int currentLevel = 0;
+  
+    [Header("Sound and ScreenSettings")]
+    private SoundSettings soundSettings;
+    public AudioSource SoundEffects;
+    public AudioSource Music;
+    public ScanlinesEffect GameCameraScanline;
+   
+ 
+    
+   
     [SerializeField]
 
     private InputActionReference PauseButton;
@@ -34,17 +48,38 @@ public class GameController: MonoBehaviour {
         changeScene = GetComponent<changeScene>();
         soundSettings = GetComponent<SoundSettings>();
         ballScript = FindObjectOfType(typeof(Ball)) as Ball;
-        
+        if(SoundEffects != null && Music != null){
+    SoundEffects.volume = PlayerPrefs.GetFloat("EffectsVolume",0.5f);
+        Music.volume = PlayerPrefs.GetFloat("MusicVolume",0.5f);
+        }
+    
         gameState = GameState.Playing;
         soundSettings = GetComponent<SoundSettings>();
         GameCameraScanline = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScanlinesEffect>();
+        if(GameCameraScanline != null){
+            GameCameraScanline.enabled = soundSettings.scanLines;
+        }
         currentSceneName = SceneManager.GetActiveScene().name;
+        if(currentSceneName.Substring(0, 4) == "Stage 1"){
+        pauseMenu.SetActive(false);
+        }
     }
 
     void Update() {
+ 
+                 
+
+            
+       
+        
+
          if (currentSceneName != SceneManager.GetActiveScene().name)
         {
-            if(SceneManager.GetActiveScene().name == "Stage1"){
+            
+            if(SceneManager.GetActiveScene().name.Substring(0,4) == "Stage"){
+                pauseMenu = GameObject.FindGameObjectWithTag("Pause Menu");
+               
+                 pauseMenu.SetActive(false);
                  Paddle1 = GameObject.Find("Paddle1").transform;
                  Paddle2 = GameObject.Find("Paddle2").transform;
             }
@@ -57,7 +92,7 @@ public class GameController: MonoBehaviour {
         GameCameraScanline.enabled = soundSettings.scanLines;
         }
         
-        if(PauseButton.action.triggered || Input.GetButtonDown("Pause")) {
+        if(Input.GetButtonDown("Pause")) {
             if(gameState == GameState.Playing) {
                 PauseGame();
             } else {
@@ -67,18 +102,23 @@ public class GameController: MonoBehaviour {
         if(gameState == GameState.Playing) {
        EndOfMatch();
         }
+        EndOfMatchButton();
     }
 
-    void PauseGame() {
+    public void PauseGame() {
         gameState = GameState.Paused;
         Time.timeScale = 0f; // This will pause all animations, physics, etc.
+        pauseMenu.SetActive(true);
+        SelectGameobject(GameObject.Find("Resume Game Button"));
     }
 
-    void ResumeGame() {
+    public void ResumeGame() {
         gameState = GameState.Playing;
         Time.timeScale = 1f; // This will resume the normal time scale.
+        pauseMenu.SetActive(false);
     }
     void EndOfMatch() {
+    
         if(ballScript == null || Paddle1 == null || Paddle2 == null) {
             return;
         } 
@@ -86,26 +126,42 @@ public class GameController: MonoBehaviour {
             if(ballScript.player1Score >= 5) {
             PlayerWon.gameObject.SetActive(true);
             PlayerWon.text = "Player 1 Won!!!";
+            StartCoroutine(PlayEndOfMatchSound("Player1Won"));         
             gameState = GameState.EndOfMatch;
-            if(Input.GetKeyDown(KeyCode.Space)){
-                
-                NextLevel();
-            }
+            
         } else if(ballScript.player2Score >= 5) {
             PlayerWon.gameObject.SetActive(true);
-            PlayerWon.text = "Player 2 Won!!!";
             gameState = GameState.EndOfMatch;
-            if(Input.GetKeyDown(KeyCode.Space)) {
-                
-                ResetMatch();
-                
-            }
+            PlayerWon.text = "Player 2 Won!!!";
+            StartCoroutine(PlayEndOfMatchSound("Player2Won"));
+            
+                   
         }
+    }
+    private void EndOfMatchButton(){
+        if(Input.GetKeyDown(KeyCode.Space) && canProgress && gameState == GameState.EndOfMatch){
+                canProgress = false;
+                 if(ballScript.player1Score >= 5 && !Paddle2.GetComponent<CatPaddle>().isPlayer) {
+                NextLevel();
+                 }
+                 else{
+                    if(Paddle2.GetComponent<CatPaddle>().isPlayer){
+                        RandomLevel();
+                    } else{
+
+                    
+                ResetMatch();
+                    }
+                 }
+              
+            }
+
     }
     private void ResetMatch() {
         ballScript.player1Score = 0;
         ballScript.player2Score = 0;
         PlayerWon.gameObject.SetActive(false);
+        PerfectGame.gameObject.SetActive(false);
         gameState = GameState.Playing;
         ballScript.scoreText.text = $"{ballScript.player1Score} - {ballScript.player2Score}";
         Paddle1.position = new Vector3(Paddle1.position.x,0,0);
@@ -115,7 +171,15 @@ public class GameController: MonoBehaviour {
     private void NextLevel() {
         currentLevel += 1;
         PlayerPrefs.SetString("CurrentStage",Stages[currentLevel]);
+        if(currentLevel >= Stages.Length) {
+            PlayerPrefs.SetString("CurrentStage",Stages[0]);
+        }
+        
         changeScene.targetScene = Stages[currentLevel];
+        changeScene.isChangeScene= true;
+    }
+    private void RandomLevel(){
+        changeScene.targetScene = Stages[Random.Range(0, Stages.Length - 1)];
         changeScene.isChangeScene= true;
     }
     void OnSceneLoaded(Scene scene,LoadSceneMode mode) {
@@ -131,5 +195,31 @@ public class GameController: MonoBehaviour {
     public void MultiPlayer(){
         singlePlayer = false;
     
+    }
+    public void SelectGameobject(GameObject myGameObject){
+        GameObject myEventSystem = GameObject.Find("EventSystem");
+        myEventSystem .GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(myGameObject);
+    }
+    IEnumerator PlayEndOfMatchSound(string playerWon){
+        SoundEffects.clip = Resources.Load<AudioClip>("Sounds/" + playerWon);
+        if(SoundEffects.clip != null){
+            SoundEffects.Play();
+        
+            yield return new WaitWhile (()=> SoundEffects.isPlaying);
+        }
+            if(ballScript.player1Score == 0 || ballScript.player2Score == 0){
+                     yield return new WaitForSeconds(1);
+                     PerfectGame.gameObject.SetActive(true);
+                     SoundEffects.clip = Resources.Load<AudioClip>("Sounds/PerfectGame");
+                     if(SoundEffects.clip != null){
+                     SoundEffects.Play();
+                     yield return new WaitWhile (()=> SoundEffects.isPlaying);
+                     }
+
+            }
+            Debug.Log("Sound Played");
+            canProgress = true;
+       
+
     }
 }

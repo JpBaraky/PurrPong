@@ -44,12 +44,12 @@ void Start(){
 
             spawnObject.GetComponent<SpriteRenderer>().flipX = !isGoingRight;
             if(dogGoingtoTheBone[itemToSpawn] && playerID == 1){
-                Instantiate(extraSpawnStuff[itemToSpawn], new Vector3 ( playersPosition[playerID].position.x + 1.5f, playersPosition[playerID].position.y,  playersPosition[playerID].position.z), spawn.transform.rotation);
+                Instantiate(extraSpawnStuff[itemToSpawn], new Vector3 ( playersPosition[playerID].position.x + 1f, playersPosition[playerID].position.y,  playersPosition[playerID].position.z), spawn.transform.rotation);
                 spawnObject.GetComponent<ObjectsController>().downDistance =  Math.Abs(spawn.transform.position.x) + Math.Abs(playersPosition[playerID].position.x) - 1.5f;
             }
             if(dogGoingtoTheBone[itemToSpawn] && playerID == 2){
                 spawnObject.GetComponent<ObjectsController>().upDistance =   Math.Abs(spawn.transform.position.x) + Math.Abs(playersPosition[playerID].position.x) - 1.5f;
-                Instantiate(extraSpawnStuff[itemToSpawn], new Vector3 ( playersPosition[playerID].position.x - 1.5f, playersPosition[playerID].position.y,  playersPosition[playerID].position.z), spawn.transform.rotation);
+                Instantiate(extraSpawnStuff[itemToSpawn], new Vector3 ( playersPosition[playerID].position.x - 1f, playersPosition[playerID].position.y,  playersPosition[playerID].position.z), spawn.transform.rotation);
             }
 
             objectController.movingUp = isGoingRight;   

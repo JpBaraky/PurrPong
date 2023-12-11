@@ -20,17 +20,20 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stage 1.unity
     guid: 43ea9778ac5d5a645b761d13ed4acae4
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Stage 2.unity
+    guid: aee106f6ca025e84088bce2d50ced996
+  - enabled: 1
+    path: Assets/Scenes/Stage 3.unity
+    guid: 40ac6050c7edae24fb9da857b00a117e
+  - enabled: 1
+    path: Assets/Scenes/Stage 4.unity
+    guid: aa3c3187ef615154987d734dbccdc15c
+  - enabled: 1
+    path: Assets/Scenes/Stage 5.unity
+    guid: b0634b68331c5054eb6405288db2c1b6
+  - enabled: 1
+    path: Assets/Scenes/EndCredits.unity
+    guid: f5faa5c85025eda46a72f204d01b9904
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 3beaa8a2d5536654a9be86121b64c2ab, type: 2}

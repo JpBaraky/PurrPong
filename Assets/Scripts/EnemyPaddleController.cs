@@ -12,6 +12,10 @@ public class EnemyPaddleController: MonoBehaviour {
 
 
     // parameters for the AI behavior
+    public float distanceX= 1f;
+    public float SpeedX;
+    private Vector3 startPosition;
+    private float time;
     public float minPaddleSpeed = 4.0f;
     public float maxPaddleSpeed = 4.0f;
     public float reactionTime = 0.5f;
@@ -33,6 +37,7 @@ public class EnemyPaddleController: MonoBehaviour {
         reactionTime = AiDificults.GetReactionTime(aiDificults);
         errorMargin = AiDificults.GetErrorMargin(aiDificults);
         catPaddle = GetComponent<CatPaddle>();
+        startPosition = transform.position;
     }
 
     void FixedUpdate() {
@@ -46,6 +51,10 @@ public class EnemyPaddleController: MonoBehaviour {
             }
             // calculate the target position based on the ball's predicted position
 
+            time += Time.deltaTime *SpeedX;
+            float newX = startPosition.x + Mathf.Sin(time) * distanceX;
+             transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+    
 
             float predictedPositionY = PredictBallPosition();
             //float predictedPositionX = PredictBallPositionX(); 
