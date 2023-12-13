@@ -29,7 +29,7 @@ public class ButtonSound : MonoBehaviour
     {
         if (buttonClickSound != null)
         {
-            Debug.Log("Playing sound");
+           
             audioSource.PlayOneShot(buttonClickSound);
         }
     }

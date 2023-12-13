@@ -64,6 +64,9 @@ MonoBehaviour:
   singlePlayer: 0
   SoundEffects: {fileID: 2340946299585408178}
   Music: {fileID: 3998264081036230745}
+  player1Wins: {fileID: 8300000, guid: 17df26d147d78de448952388221bc83c, type: 3}
+  player2Wins: {fileID: 8300000, guid: 6d1e4ccbdd62dd548b80bec48c931490, type: 3}
+  perfectGame: {fileID: 8300000, guid: 0d84c9b8a2f5e14459c659fef41c2d83, type: 3}
   GameCameraScanline: {fileID: 0}
   PauseButton: {fileID: 8805940070987133380, guid: 3de6ec83ade8008478ff90ce3a6dd0ec, type: 3}
 --- !u!114 &3874287530794375246
@@ -81,7 +84,10 @@ MonoBehaviour:
   musicSlider: {fileID: 0}
   effectsSlider: {fileID: 0}
   Scanlines: {fileID: 0}
+  savedMusicVolume: 0
+  savedEffectsVolume: 0
   scanLines: 0
+  allAudioSources: []
   audioClips: []
 --- !u!114 &4951306553172326043
 MonoBehaviour:

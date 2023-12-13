@@ -137,7 +137,8 @@ MonoBehaviour:
   destroyTimer: 10
   PowerName: Cat Nip
   powerUpSprite: {fileID: 0}
-  powerUpSound: {fileID: 0}
+  powerUpSoundClip: {fileID: 8300000, guid: 21e35a4e0a54d4c4c9b1a6b82086bf43, type: 3}
+  voiceClip: {fileID: 0}
   displayDuration: 2
   flashCount: 3
   flashInterval: 0.5
@@ -155,7 +156,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

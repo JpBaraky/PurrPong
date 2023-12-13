@@ -2596,8 +2596,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneNames:
-  - TittleScreen
   - Options
+  - TittleScreen
 --- !u!1 &1907180757
 GameObject:
   m_ObjectHideFlags: 0

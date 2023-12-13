@@ -503,6 +503,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Scene
       objectReference: {fileID: 0}
+    - target: {fileID: 1802918547997177539, guid: 02f285a2313a5334283f0f7393273dbf, type: 3}
+      propertyPath: m_TagString
+      value: Music
+      objectReference: {fileID: 0}
     - target: {fileID: 2688585294471025935, guid: 02f285a2313a5334283f0f7393273dbf, type: 3}
       propertyPath: Loop
       value: 1

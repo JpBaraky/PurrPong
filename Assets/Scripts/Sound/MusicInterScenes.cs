@@ -8,6 +8,8 @@ public class MusicInterScenes : MonoBehaviour
 {
     private GameObject[] MusicObjects;
     public string[] SceneNames;
+    private string currentScene;
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,12 +24,28 @@ public class MusicInterScenes : MonoBehaviour
         else{
             Destroy(gameObject);
         }
+    currentScene = SceneManager.GetActiveScene().name;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(currentScene != SceneManager.GetActiveScene().name){
+            currentScene = SceneManager.GetActiveScene().name;
+       if(currentScene == SceneNames[0]){
+
+       }
+       else{
+        if(currentScene == SceneNames[1]){
+
+        }
+        else{
+            Destroy(gameObject); //Destroy this Object if it goes to another Scene.
+        }
+       }
+       
+       }
     }
+    
 }

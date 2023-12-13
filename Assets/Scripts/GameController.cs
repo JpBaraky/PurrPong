@@ -32,9 +32,11 @@ public class GameController: MonoBehaviour {
     private int currentLevel = 0;
   
     [Header("Sound and ScreenSettings")]
-    private SoundSettings soundSettings;
+    
     public AudioSource SoundEffects;
+    private SoundSettings soundSettings;
     public AudioSource Music;
+    public AudioClip player1Wins, player2Wins, perfectGame;
     public ScanlinesEffect GameCameraScanline;
    
  
@@ -126,14 +128,14 @@ public class GameController: MonoBehaviour {
             if(ballScript.player1Score >= 5) {
             PlayerWon.gameObject.SetActive(true);
             PlayerWon.text = "Player 1 Won!!!";
-            StartCoroutine(PlayEndOfMatchSound("Player1Won"));         
+            StartCoroutine(PlayEndOfMatchSound(player1Wins));         
             gameState = GameState.EndOfMatch;
             
         } else if(ballScript.player2Score >= 5) {
             PlayerWon.gameObject.SetActive(true);
             gameState = GameState.EndOfMatch;
             PlayerWon.text = "Player 2 Won!!!";
-            StartCoroutine(PlayEndOfMatchSound("Player2Won"));
+            StartCoroutine(PlayEndOfMatchSound(player2Wins));
             
                    
         }
@@ -186,8 +188,8 @@ public class GameController: MonoBehaviour {
         changeScene = GetComponent<changeScene>();
         ballScript = FindObjectOfType(typeof(Ball)) as Ball;
         gameState = GameState.Playing;
-        Debug.Log("OnSceneLoaded: " + scene.name);
-        Debug.Log(mode);
+       
+       
     }
     public void SinglePlayer(){
         singlePlayer = true;
@@ -200,8 +202,8 @@ public class GameController: MonoBehaviour {
         GameObject myEventSystem = GameObject.Find("EventSystem");
         myEventSystem .GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(myGameObject);
     }
-    IEnumerator PlayEndOfMatchSound(string playerWon){
-        SoundEffects.clip = Resources.Load<AudioClip>("Sounds/" + playerWon);
+    IEnumerator PlayEndOfMatchSound(AudioClip playerWon){
+        SoundEffects.clip = playerWon;
         if(SoundEffects.clip != null){
             SoundEffects.Play();
         
@@ -210,7 +212,7 @@ public class GameController: MonoBehaviour {
             if(ballScript.player1Score == 0 || ballScript.player2Score == 0){
                      yield return new WaitForSeconds(1);
                      PerfectGame.gameObject.SetActive(true);
-                     SoundEffects.clip = Resources.Load<AudioClip>("Sounds/PerfectGame");
+                     SoundEffects.clip = perfectGame;
                      if(SoundEffects.clip != null){
                      SoundEffects.Play();
                      yield return new WaitWhile (()=> SoundEffects.isPlaying);

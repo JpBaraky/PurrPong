@@ -156,7 +156,7 @@ public class SoundSettings: MonoBehaviour {
                     audioSource.volume = savedMusicVolume;
                 }else{
                 // This is a new AudioSource
-                Debug.Log("New AudioSource found: " + audioSource.name);
+                
                 audioSource.volume = savedEffectsVolume;
 
                 // Add it to the list to keep track of it

@@ -38,6 +38,7 @@ public class PowerUpBasic : MonoBehaviour
         }
         powerUpSprite = GetComponent<SpriteRenderer>();
         powerUpSound = GetComponent<AudioSource>();
+        powerUpSound.clip = powerUpSoundClip;
     }
 
     // Update is called once per frame
