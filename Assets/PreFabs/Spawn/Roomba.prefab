@@ -100,14 +100,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb4bd082f15e95d4a855e67749256e59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upDistance: 10
-  downDistance: 10
+  upDistance: 12
+  downDistance: 12
   rotationSpeed: 100
   moveSpeed: 2
   pauseTime: 1
   movingUp: 1
   timesToMove: 3
-  rotationAngle: 180
+  rotationAngle: 0
   isLeftToRight: 0
 --- !u!50 &7898659186450365810
 Rigidbody2D:

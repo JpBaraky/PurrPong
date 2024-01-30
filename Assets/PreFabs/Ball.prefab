@@ -114,6 +114,7 @@ MonoBehaviour:
   isFakeBall: 0
   hitSoundHurdle: {fileID: 8300000, guid: 2fc1febd45f35f849b37c6627655d725, type: 3}
   hitSoundPaddle: {fileID: 8300000, guid: ab14a4f127e979b449a54b388a981699, type: 3}
+  goalSound: {fileID: 8300000, guid: 4ff07d2c3754b374eba87bfc08a516de, type: 3}
   StartGame: {fileID: 0}
 --- !u!50 &1917104507570690728
 Rigidbody2D:

@@ -10,6 +10,7 @@ public class Ball: MonoBehaviour {
     public  int player1Score = 0;
     public  int player2Score = 0;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI readyToStartText;
     public bool readyToStart = true;
     public EnemyPaddleController enemyPaddleController;
     private GameController gameController;
@@ -23,6 +24,7 @@ public class Ball: MonoBehaviour {
     [Header("Sound Clips")]
     public AudioClip hitSoundHurdle;
     public AudioClip hitSoundPaddle;
+    public AudioClip goalSound;
 
 [SerializeField]
 
@@ -37,6 +39,8 @@ private InputActionReference StartGame;
         scoreText.text = $"{player1Score} - {player2Score}";
         startingSpeed = speed;
         ballSounds = GetComponent<AudioSource>();
+        readyToStartText = GameObject.Find("Press to start").GetComponent<TextMeshProUGUI>();
+        readyToStartText.gameObject.SetActive(true);   
     }
 
     void FixedUpdate() {
@@ -56,6 +60,8 @@ private InputActionReference StartGame;
         && readyToStart) {
             // Enable the ball's movement and mark it as not ready to start again
             enemyPaddleController.gameStarted = true;
+            readyToStartText.gameObject.SetActive(false);
+            readyToStartText.gameObject.GetComponent<BlinkingText>().isBlinking = false;
             readyToStart = false;
         }
     }
@@ -73,17 +79,22 @@ private InputActionReference StartGame;
             rb.AddTorque(Random.Range(-10, 10));
         }
         if(col.gameObject.tag == "Hurdle") {
-            float y = (transform.position.y - col.transform.position.y) / col.collider.bounds.size.y;
-            float x = (transform.position.x - col.transform.position.x) / col.collider.bounds.size.x;
-            direction = new Vector2(-direction.x,y).normalized;   
-            ballSounds.PlayOneShot(hitSoundHurdle);        
-            rb.AddTorque(Random.Range(-10, 10));
+            //direction = new Vector2(direction.x,-direction.y);
+            direction = Vector2.Reflect(direction, col.contacts[0].normal);
+            ballSounds.PlayOneShot(hitSoundHurdle);
         }
+        if(col.gameObject.tag == "HurdleStage") {
+            //direction = new Vector2(direction.x,-direction.y);
+            direction = Vector2.Reflect(direction, col.contacts[0].normal);
+            ballSounds.PlayOneShot(hitSoundHurdle);
+        }
+
 
         // If the ball collides with a wall, change its direction to bounce off the wall normally
         if(col.gameObject.tag == "Wall") {
-            direction = new Vector2(direction.x,-direction.y);
-            ballSounds.PlayOneShot(hitSoundHurdle);
+            //direction = new Vector2(direction.x,-direction.y);
+            direction = Vector2.Reflect(direction, col.contacts[0].normal);
+            ballSounds.PlayOneShot(hitSoundHurdle);            
             rb.AddTorque(Random.Range(-10, 10));
         }
 
@@ -91,7 +102,7 @@ private InputActionReference StartGame;
         if(col.gameObject.tag == "GoalWall") {
             if(!isFakeBall){
 
-            
+            ballSounds.PlayOneShot(goalSound);
             if(col.gameObject.transform.position.x > 0) {
                 direction = Vector2.left.normalized;
                 player1Score++;
@@ -102,6 +113,7 @@ private InputActionReference StartGame;
 
             scoreText.text = $"{player1Score} - {player2Score}";  
             Reset();
+            readyToStartText.gameObject.SetActive(true);
                      
             
             } else{

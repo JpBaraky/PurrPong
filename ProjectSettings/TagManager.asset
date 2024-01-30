@@ -20,6 +20,7 @@ TagManager:
   - Pause Menu
   - Sound Effects
   - Music
+  - HurdleStage
   layers:
   - Default
   - TransparentFX

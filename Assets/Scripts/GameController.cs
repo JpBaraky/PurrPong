@@ -21,6 +21,8 @@ public class GameController: MonoBehaviour {
     [Header("UI")]
     public TextMeshProUGUI PlayerWon;
     public TextMeshProUGUI PerfectGame;
+    public TextMeshProUGUI PressToStart;
+    private bool StartBlinking;
     public GameObject pauseMenu;
     [Header("Gameplay")]
     public GameState gameState;
@@ -56,7 +58,6 @@ public class GameController: MonoBehaviour {
         }
     
         gameState = GameState.Playing;
-        soundSettings = GetComponent<SoundSettings>();
         GameCameraScanline = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ScanlinesEffect>();
         if(GameCameraScanline != null){
             GameCameraScanline.enabled = soundSettings.scanLines;

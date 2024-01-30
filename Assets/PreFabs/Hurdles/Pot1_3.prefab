@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 794162483195493534}
   m_Layer: 0
   m_Name: Pot1_3
-  m_TagString: Hurdle
+  m_TagString: HurdleStage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

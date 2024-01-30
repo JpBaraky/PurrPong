@@ -9,7 +9,7 @@ public class ButtonSound : MonoBehaviour
     public AudioClip buttonClickSound; // Assign your sound clip in the Inspector
     public AudioClip buttonSelectedSound;
     private Button button;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     private bool selected;
 
 
@@ -17,7 +17,10 @@ public class ButtonSound : MonoBehaviour
     {
         button = GetComponent<Button>();
         audioSource = GetComponent<AudioSource>();
-       button.onClick.AddListener(PlayButtonClickSound);
+if(button != null){
+
+     button.onClick.AddListener(PlayButtonClickSound);
+}
 
 
     }

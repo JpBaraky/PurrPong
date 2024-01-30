@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7475261963244833479}
   m_Layer: 0
   m_Name: Barbecue_1
-  m_TagString: Hurdle
+  m_TagString: HurdleStage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

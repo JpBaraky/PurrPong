@@ -2361,6 +2361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerWon: {fileID: 0}
   PerfectGame: {fileID: 0}
+  PressToStart: {fileID: 0}
   pauseMenu: {fileID: 0}
   gameState: 0
   Paddle1: {fileID: 0}
@@ -2369,6 +2370,9 @@ MonoBehaviour:
   singlePlayer: 0
   SoundEffects: {fileID: 0}
   Music: {fileID: 0}
+  player1Wins: {fileID: 0}
+  player2Wins: {fileID: 0}
+  perfectGame: {fileID: 0}
   GameCameraScanline: {fileID: 0}
   PauseButton: {fileID: 0}
 --- !u!114 &1527747892
