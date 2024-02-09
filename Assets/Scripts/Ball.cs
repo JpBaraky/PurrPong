@@ -51,6 +51,10 @@ private InputActionReference StartGame;
     }
 
     void Update() {
+          if(player1Score >= 5 || player2Score >= 5) {
+           readyToStartText.gameObject.SetActive(false);
+            readyToStartText.gameObject.GetComponent<BlinkingText>().isBlinking = false;
+        }
         if(gameController.gameState != GameState.Playing) {
             return;
         }
@@ -64,6 +68,7 @@ private InputActionReference StartGame;
             readyToStartText.gameObject.GetComponent<BlinkingText>().isBlinking = false;
             readyToStart = false;
         }
+      
     }
 
     void OnCollisionEnter2D(Collision2D col) {
@@ -113,7 +118,7 @@ private InputActionReference StartGame;
 
             scoreText.text = $"{player1Score} - {player2Score}";  
             Reset();
-            readyToStartText.gameObject.SetActive(true);
+            
                      
             
             } else{
@@ -149,7 +154,7 @@ private InputActionReference StartGame;
              foreach(GameObject hurdles in Hurdles){
                  Destroy(hurdles);
              }
-            
+            readyToStartText.gameObject.SetActive(true);
         }
         
     }
