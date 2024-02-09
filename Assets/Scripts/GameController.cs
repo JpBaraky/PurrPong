@@ -26,11 +26,13 @@ public class GameController: MonoBehaviour {
     public GameObject pauseMenu;
     [Header("Gameplay")]
     public GameState gameState;
+    private GameState oldGameState;
     public Transform Paddle1, Paddle2;
     public string[] Stages;
     public bool singlePlayer;
     private Ball ballScript;
     private bool canProgress;
+    private bool matchEnded;
     private int currentLevel = 0;
   
     [Header("Sound and ScreenSettings")]
@@ -40,6 +42,7 @@ public class GameController: MonoBehaviour {
     public AudioSource Music;
     public AudioClip player1Wins, player2Wins, perfectGame;
     public ScanlinesEffect GameCameraScanline;
+
    
  
     
@@ -99,9 +102,13 @@ public class GameController: MonoBehaviour {
             if(gameState == GameState.Playing) {
                 PauseGame();
             } else {
-                ResumeGame();
+                if(gameState == GameState.Paused) {
+                    ResumeGame();
+                }
             }
-        }
+             
+            }
+        
         if(gameState == GameState.Playing) {
        EndOfMatch();
         }
@@ -109,6 +116,7 @@ public class GameController: MonoBehaviour {
     }
 
     public void PauseGame() {
+        oldGameState = gameState;
         gameState = GameState.Paused;
         Time.timeScale = 0f; // This will pause all animations, physics, etc.
         pauseMenu.SetActive(true);
@@ -116,7 +124,7 @@ public class GameController: MonoBehaviour {
     }
 
     public void ResumeGame() {
-        gameState = GameState.Playing;
+        gameState = oldGameState;
         Time.timeScale = 1f; // This will resume the normal time scale.
         pauseMenu.SetActive(false);
     }
@@ -125,24 +133,27 @@ public class GameController: MonoBehaviour {
         if(ballScript == null || Paddle1 == null || Paddle2 == null) {
             return;
         } 
-        
+        if(!matchEnded){
             if(ballScript.player1Score >= 5) {
             PlayerWon.gameObject.SetActive(true);
             PlayerWon.text = "Player 1 Won!!!";
             StartCoroutine(PlayEndOfMatchSound(player1Wins));         
             gameState = GameState.EndOfMatch;
+            matchEnded = true;
             
         } else if(ballScript.player2Score >= 5) {
             PlayerWon.gameObject.SetActive(true);
             gameState = GameState.EndOfMatch;
             PlayerWon.text = "Player 2 Won!!!";
             StartCoroutine(PlayEndOfMatchSound(player2Wins));
+            matchEnded = true;
             
                    
         }
+        }
     }
     private void EndOfMatchButton(){
-        if(Input.GetKeyDown(KeyCode.Space) && canProgress && gameState == GameState.EndOfMatch){
+        if(Input.anyKey && canProgress && gameState == GameState.EndOfMatch){
                 canProgress = false;
                  if(ballScript.player1Score >= 5 && !Paddle2.GetComponent<CatPaddle>().isPlayer) {
                 NextLevel();
@@ -220,7 +231,7 @@ public class GameController: MonoBehaviour {
                      }
 
             }
-            Debug.Log("Sound Played");
+        
             canProgress = true;
        
 

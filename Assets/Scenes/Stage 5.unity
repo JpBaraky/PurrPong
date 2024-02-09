@@ -3383,6 +3383,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1272232444}
+    - target: {fileID: 4139393117190125204, guid: c173c33b9317b034988c1a9b32cdeddf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7923245028258686679, guid: c173c33b9317b034988c1a9b32cdeddf, type: 3}
       propertyPath: m_IsActive
       value: 1
