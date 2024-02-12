@@ -846,6 +846,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5656662691455948824}
     - target: {fileID: 3874287530794375244, guid: 4ffbb244c7c0e9c49ba639e27f791fce, type: 3}
+      propertyPath: currentLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874287530794375244, guid: 4ffbb244c7c0e9c49ba639e27f791fce, type: 3}
+      propertyPath: singlePlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874287530794375244, guid: 4ffbb244c7c0e9c49ba639e27f791fce, type: 3}
       propertyPath: GameCameraScanline
       value: 
       objectReference: {fileID: 2879860717593522153}
@@ -5568,6 +5576,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Paddle1
       objectReference: {fileID: 0}
+    - target: {fileID: 6575974466967335411, guid: d86f86966eac7a449840937f9a430c86, type: 3}
+      propertyPath: otherPaddle
+      value: 
+      objectReference: {fileID: 2879860719220150651}
+    - target: {fileID: 6575974466967335411, guid: d86f86966eac7a449840937f9a430c86, type: 3}
+      propertyPath: enemyPaddleController
+      value: 
+      objectReference: {fileID: 2879860719220150650}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d86f86966eac7a449840937f9a430c86, type: 3}
 --- !u!114 &3183726052657909940 stripped

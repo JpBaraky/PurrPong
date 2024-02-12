@@ -33,7 +33,7 @@ public class GameController: MonoBehaviour {
     private Ball ballScript;
     private bool canProgress;
     private bool matchEnded;
-    private int currentLevel = 0;
+    public int currentLevel = 0;
   
     [Header("Sound and ScreenSettings")]
     
@@ -112,7 +112,9 @@ public class GameController: MonoBehaviour {
         if(gameState == GameState.Playing) {
        EndOfMatch();
         }
+        if(gameState == GameState.EndOfMatch){
         EndOfMatchButton();
+        }
     }
 
     public void PauseGame() {
@@ -135,6 +137,7 @@ public class GameController: MonoBehaviour {
         } 
         if(!matchEnded){
             if(ballScript.player1Score >= 5) {
+                canProgress = true;
             PlayerWon.gameObject.SetActive(true);
             PlayerWon.text = "Player 1 Won!!!";
             StartCoroutine(PlayEndOfMatchSound(player1Wins));         
@@ -142,6 +145,7 @@ public class GameController: MonoBehaviour {
             matchEnded = true;
             
         } else if(ballScript.player2Score >= 5) {
+            canProgress = true;
             PlayerWon.gameObject.SetActive(true);
             gameState = GameState.EndOfMatch;
             PlayerWon.text = "Player 2 Won!!!";
@@ -153,9 +157,10 @@ public class GameController: MonoBehaviour {
         }
     }
     private void EndOfMatchButton(){
-        if(Input.anyKey && canProgress && gameState == GameState.EndOfMatch){
+        if(Input.anyKey && canProgress && matchEnded){
                 canProgress = false;
-                 if(ballScript.player1Score >= 5 && !Paddle2.GetComponent<CatPaddle>().isPlayer) {
+                 if(ballScript.player1Score >= 5 && !Paddle2.gameObject.GetComponent<CatPaddle>().isPlayer) {
+                    Debug.Log("next");
                 NextLevel();
                  }
                  else{
@@ -180,6 +185,9 @@ public class GameController: MonoBehaviour {
         ballScript.scoreText.text = $"{ballScript.player1Score} - {ballScript.player2Score}";
         Paddle1.position = new Vector3(Paddle1.position.x,0,0);
         Paddle2.position = new Vector3(Paddle2.position.x,0,0);
+        Paddle1.GetComponent<CatPaddle>().ResetAll();
+        Paddle2.GetComponent<CatPaddle>().ResetAll();
+        matchEnded = false;
 
     }
     private void NextLevel() {
@@ -236,4 +244,5 @@ public class GameController: MonoBehaviour {
        
 
     }
+
 }

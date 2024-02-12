@@ -138,6 +138,8 @@ private InputActionReference StartGame;
             enemyPaddleController.startBoost = false;
             Paddle1.position = new Vector3(-5f,0,0);
             Paddle2.position = new Vector3(5f,0,0);
+            ResetSize();
+            ResetSpeed();
            //Stop Ball's rotation
             rb.angularVelocity = 0;
             rb.velocity = Vector2.zero;
