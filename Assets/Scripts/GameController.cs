@@ -122,6 +122,11 @@ public class GameController: MonoBehaviour {
         gameState = GameState.Paused;
         Time.timeScale = 0f; // This will pause all animations, physics, etc.
         pauseMenu.SetActive(true);
+        Transform child = pauseMenu.transform.GetChild(0);
+        Transform child2 = child.transform.GetChild(2);
+        Transform child3 = child.transform.GetChild(3);
+        child2.gameObject.SetActive(true);
+        child3.gameObject.SetActive(false);
         SelectGameobject(GameObject.Find("Resume Game Button"));
     }
 
