@@ -84,7 +84,10 @@ public void OnMove(){
         speed = startingSpeed;
 
     }
-
+    public void ResetAll(){
+        ResetSize();
+        ResetSpeed();
+    }
 
 }
 

@@ -51,6 +51,10 @@ private InputActionReference StartGame;
     }
 
     void Update() {
+          if(player1Score >= 5 || player2Score >= 5) {
+           readyToStartText.gameObject.SetActive(false);
+            readyToStartText.gameObject.GetComponent<BlinkingText>().isBlinking = false;
+        }
         if(gameController.gameState != GameState.Playing) {
             return;
         }
@@ -64,6 +68,7 @@ private InputActionReference StartGame;
             readyToStartText.gameObject.GetComponent<BlinkingText>().isBlinking = false;
             readyToStart = false;
         }
+      
     }
 
     void OnCollisionEnter2D(Collision2D col) {
@@ -113,7 +118,7 @@ private InputActionReference StartGame;
 
             scoreText.text = $"{player1Score} - {player2Score}";  
             Reset();
-            readyToStartText.gameObject.SetActive(true);
+            
                      
             
             } else{
@@ -133,6 +138,8 @@ private InputActionReference StartGame;
             enemyPaddleController.startBoost = false;
             Paddle1.position = new Vector3(-5f,0,0);
             Paddle2.position = new Vector3(5f,0,0);
+            ResetSize();
+            ResetSpeed();
            //Stop Ball's rotation
             rb.angularVelocity = 0;
             rb.velocity = Vector2.zero;
@@ -149,7 +156,7 @@ private InputActionReference StartGame;
              foreach(GameObject hurdles in Hurdles){
                  Destroy(hurdles);
              }
-            
+            readyToStartText.gameObject.SetActive(true);
         }
         
     }

@@ -61,6 +61,7 @@ public class changeScene : MonoBehaviour
     public void DestroyThis(String destroy) {
         Destroy(GameObject.Find(destroy));
     }
+
  
     
     

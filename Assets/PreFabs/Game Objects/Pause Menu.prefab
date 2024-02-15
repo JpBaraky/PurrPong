@@ -683,6 +683,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 681248883314411641}
+  - component: {fileID: 6879603344090639471}
   m_Layer: 5
   m_Name: Pause Menu
   m_TagString: Pause Menu
@@ -711,6 +712,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6879603344090639471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681248883314411640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed88c69ab063aa40943740cabc647f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &681248881756168290
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1354,7 +1367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8667830877979069759, guid: c4f6e4377c836b64ea97f9975fb2f5d0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8667830877979069759, guid: c4f6e4377c836b64ea97f9975fb2f5d0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -1363,7 +1376,7 @@ PrefabInstance:
     - target: {fileID: 8667830877979069759, guid: c4f6e4377c836b64ea97f9975fb2f5d0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6879603344090639471}
     - target: {fileID: 8667830877979069759, guid: c4f6e4377c836b64ea97f9975fb2f5d0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -1378,7 +1391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8667830877979069759, guid: c4f6e4377c836b64ea97f9975fb2f5d0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ButtonChangeScene
+      value: PauseButtonReturn
       objectReference: {fileID: 0}
     - target: {fileID: 8667830877979069759, guid: c4f6e4377c836b64ea97f9975fb2f5d0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -1386,7 +1399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8667830877979069759, guid: c4f6e4377c836b64ea97f9975fb2f5d0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: changeScene, Assembly-CSharp
+      value: PauseButtomReturnTittle, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8667830877979069759, guid: c4f6e4377c836b64ea97f9975fb2f5d0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName

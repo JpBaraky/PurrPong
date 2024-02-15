@@ -26,7 +26,9 @@ public class PaddleSizePowerUp: MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Paddle")) {
-      
+           // Disable the collider so the power-up doesn't trigger again
+                    GetComponent<Collider2D>().enabled = false;
+                    GetComponent<SpriteRenderer>().enabled = false;
             if(!powerUpBasic.isInventory){
                 
             StartCoroutine(powerUpBasic.DisplayText());
@@ -51,9 +53,7 @@ public class PaddleSizePowerUp: MonoBehaviour {
                     // Set the power-up as active
                     powerUpActive = true;
             }
-                    // Disable the collider so the power-up doesn't trigger again
-                    GetComponent<Collider2D>().enabled = false;
-                    GetComponent<SpriteRenderer>().enabled = false;
+               
                 
             
 

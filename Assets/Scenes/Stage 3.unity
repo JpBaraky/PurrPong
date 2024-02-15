@@ -5469,6 +5469,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Paddle1
       objectReference: {fileID: 0}
+    - target: {fileID: 6575974466967335411, guid: d86f86966eac7a449840937f9a430c86, type: 3}
+      propertyPath: otherPaddle
+      value: 
+      objectReference: {fileID: 1588255445}
+    - target: {fileID: 6575974466967335411, guid: d86f86966eac7a449840937f9a430c86, type: 3}
+      propertyPath: enemyPaddleController
+      value: 
+      objectReference: {fileID: 1588255453}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d86f86966eac7a449840937f9a430c86, type: 3}
 --- !u!1001 &3874287529564692912
@@ -5510,6 +5518,14 @@ PrefabInstance:
       propertyPath: SoundEffects
       value: 
       objectReference: {fileID: 554579284}
+    - target: {fileID: 3874287530794375244, guid: 4ffbb244c7c0e9c49ba639e27f791fce, type: 3}
+      propertyPath: currentLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3874287530794375244, guid: 4ffbb244c7c0e9c49ba639e27f791fce, type: 3}
+      propertyPath: singlePlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3874287530794375244, guid: 4ffbb244c7c0e9c49ba639e27f791fce, type: 3}
       propertyPath: GameCameraScanline
       value: 
@@ -5612,6 +5628,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1272232444}
+    - target: {fileID: 4139393117190125204, guid: c173c33b9317b034988c1a9b32cdeddf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7453267779825297591, guid: c173c33b9317b034988c1a9b32cdeddf, type: 3}
       propertyPath: m_EffectColor.a
       value: 1
