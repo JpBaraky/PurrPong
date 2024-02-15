@@ -579,6 +579,14 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4283410005
       objectReference: {fileID: 0}
+    - target: {fileID: 6898670559069194097, guid: 02f285a2313a5334283f0f7393273dbf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2879860719300080871}
+    - target: {fileID: 6898670559069194097, guid: 02f285a2313a5334283f0f7393273dbf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PauseButtonReturn
+      objectReference: {fileID: 0}
     - target: {fileID: 7501837679640246781, guid: 02f285a2313a5334283f0f7393273dbf, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -589,3 +597,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02f285a2313a5334283f0f7393273dbf, type: 3}
+--- !u!114 &2879860719300080871 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8212974613462029389, guid: 02f285a2313a5334283f0f7393273dbf, type: 3}
+  m_PrefabInstance: {fileID: 2879860719300080870}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed88c69ab063aa40943740cabc647f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
