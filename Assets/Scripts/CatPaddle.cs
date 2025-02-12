@@ -44,7 +44,7 @@ public void OnMove(){
         if(gameController.gameState != GameState.Playing || !isPlayer) {
             return;
         }
-        Vector2 velocity = rb2d.velocity;
+        Vector2 velocity = rb2d.linearVelocity;
         velocity.y = moveY * speed * Time.fixedDeltaTime; // Calculate new velocity
         velocity.x = moveX * speed * Time.fixedDeltaTime;
         if(player1) {

@@ -12,13 +12,13 @@ public class FakeBall : MonoBehaviour
     {
         direction = Vector2.right.normalized;
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = direction * speed;
+        rb.linearVelocity = direction * speed;
         
     }
     void FixedUpdate() {
         // Move the ball in its current direction at a constant speed if the game is not paused
        
-            rb.velocity = direction * speed;
+            rb.linearVelocity = direction * speed;
            
     }
 

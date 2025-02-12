@@ -91,7 +91,7 @@ public class EnemyPaddleController: MonoBehaviour {
         // calculate the predicted position of the ball based on its current position and velocity
         float distanceToTarget = ball.position.x - transform.position.x;
         float ballVelocityY = (ball.position.y - lastBallPositionY) / Time.deltaTime;
-        float timeToTarget = Mathf.Abs(distanceToTarget / ball.GetComponent<Rigidbody2D>().velocity.x);
+        float timeToTarget = Mathf.Abs(distanceToTarget / ball.GetComponent<Rigidbody2D>().linearVelocity.x);
         float predictedPositionY = ball.position.y + ballVelocityY * timeToTarget;
 
         // add some randomness and error margin to make the AI more human-like
@@ -107,7 +107,7 @@ public class EnemyPaddleController: MonoBehaviour {
         // calculate the predicted position of the ball based on its current position and velocity
         float distanceToTarget = ball.position.x - transform.position.x;
         float ballVelocityX = (ball.position.x - lastBallPositionX) / Time.deltaTime;
-        float timeToTarget = Mathf.Abs(distanceToTarget / ball.GetComponent<Rigidbody2D>().velocity.x);
+        float timeToTarget = Mathf.Abs(distanceToTarget / ball.GetComponent<Rigidbody2D>().linearVelocity.x);
         float predictedPositionX = ball.position.x + ballVelocityX * timeToTarget;
 
         // add some randomness and error margin to make the AI more human-like

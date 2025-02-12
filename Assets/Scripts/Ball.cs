@@ -35,7 +35,7 @@ private InputActionReference StartGame;
         direction = Vector2.right.normalized;
         gameController = FindObjectOfType(typeof(GameController)) as GameController;
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.zero; 
+        rb.linearVelocity = Vector2.zero; 
         scoreText.text = $"{player1Score} - {player2Score}";
         startingSpeed = speed;
         ballSounds = GetComponent<AudioSource>();
@@ -46,7 +46,7 @@ private InputActionReference StartGame;
     void FixedUpdate() {
         // Move the ball in its current direction at a constant speed if the game is not paused
         if(!readyToStart) {
-            rb.velocity = direction * speed;
+            rb.linearVelocity = direction * speed;
         }
     }
 
@@ -129,7 +129,7 @@ private InputActionReference StartGame;
     void Reset() {
 // Reset the ball's position and velocity
             transform.position = Vector2.zero;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             readyToStart = true;
             rb.rotation = 0; 
             rb.inertia = 0;
@@ -142,7 +142,7 @@ private InputActionReference StartGame;
             ResetSpeed();
            //Stop Ball's rotation
             rb.angularVelocity = 0;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
              //Destroy all objects with the tag FakeBall
              GameObject[] fakeBalls = GameObject.FindGameObjectsWithTag("FakeBall");
              foreach(GameObject fakeBall in fakeBalls){
