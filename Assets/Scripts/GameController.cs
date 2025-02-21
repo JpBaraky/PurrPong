@@ -40,7 +40,7 @@ public class GameController: MonoBehaviour {
     public AudioSource SoundEffects;
     private SoundSettings soundSettings;
     public AudioSource Music;
-    public AudioClip player1Wins, player2Wins, perfectGame;
+    public AudioClip player1Wins, player2Wins, perfectGame, pauseGame, resumeGame;
     public ScanlinesEffect GameCameraScanline;
 
    
@@ -122,6 +122,13 @@ public class GameController: MonoBehaviour {
         gameState = GameState.Paused;
         Time.timeScale = 0f; // This will pause all animations, physics, etc.
         pauseMenu.SetActive(true);
+         SoundEffects.clip = pauseGame;
+        if(SoundEffects.clip != null){
+            SoundEffects.Play();
+        }
+        Music.volume = Music.volume /2;
+
+
         Transform child = pauseMenu.transform.GetChild(0);
         Transform child2 = child.transform.GetChild(2);
         Transform child3 = child.transform.GetChild(3);
@@ -132,6 +139,11 @@ public class GameController: MonoBehaviour {
 
     public void ResumeGame() {
         gameState = oldGameState;
+        SoundEffects.clip = resumeGame;
+        if(SoundEffects.clip != null){
+            SoundEffects.Play();
+        }
+        Music.volume = Music.volume *2;
         Time.timeScale = 1f; // This will resume the normal time scale.
         pauseMenu.SetActive(false);
     }

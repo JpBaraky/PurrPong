@@ -153,7 +153,9 @@ public class SoundSettings: MonoBehaviour {
             if (!allAudioSources.Contains(audioSource))
             {
                 if(audioSource.gameObject.CompareTag("Music")){
+                     if(SceneManager.GetActiveScene().name == "Options"){
                     audioSource.volume = savedMusicVolume;
+                     }
                 }else{
                 // This is a new AudioSource
                 
